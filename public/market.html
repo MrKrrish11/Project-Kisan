@@ -1,0 +1,180 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Market Prices - Project Kisan</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
+</head>
+<body class="market-page-body">
+
+    <header>
+        <!-- MODIFIED: Replaced header with the one containing the language switcher -->
+        <div class="header-container">
+            <div class="logo-container">
+                <a href="index.html" class="logo-link">
+                    <img src="images/LOGO.png" alt="Project Kisan Logo" class="logo">
+                    <h1>Project Kisan</h1>
+                </a>
+            </div>
+            <nav class="header-nav">
+                <a href="index.html" id="nav-home">Home</a>
+                <a href="market.html" class="active" id="nav-market">Market Prices</a>
+                <a href="guardian.html" id="nav-guardian">Guardian AI</a>
+                
+                <div class="language-selector">
+                    <button id="language-toggle-btn">
+                        <img src="images/languages.png" alt="Language">
+                        <span id="current-lang-text">English</span>
+                        <span class="caret">▼</span>
+                    </button>
+                    <div id="language-options" class="language-options hidden">
+                        <a href="#" class="language-option active" data-lang="en">English</a>
+                        <a href="#" class="language-option" data-lang="hi">हिन्दी (Hindi)</a>
+                        <a href="#" class="language-option" data-lang="kn">ಕನ್ನಡ (Kannada)</a>
+                    </div>
+                </div>
+
+                <a href="login.html" class="login-button">
+                    <img src="images/user-icon.png" alt="Login Icon">
+                    <span id="nav-login">Login</span>
+                </a>
+                <a href="#" class="login-button" style="background-color: rgb(23, 135, 23); color: white; border: none;">
+                    <span id="nav-get-app">Get App</span>
+                </a>
+            </nav>
+        </div>
+    </header>
+
+    <main class="container-wide">
+        <!-- Search Panel -->
+        <section id="search-section" class="search-panel">
+            <!-- MODIFIED: Added ID -->
+            <h2 id="market-title">Find Your Crop's Value</h2>
+            <!-- MODIFIED: Added ID -->
+            <p id="market-subtitle">Select your crop and market to get a detailed price analysis and recent price history.</p>
+            <form id="price-form">
+                <div class="search-form-grid">
+                    <div class="form-group">
+                        <!-- MODIFIED: Added ID -->
+                        <label for="state-select" id="market-label-state">State</label>
+                        <select id="state-select" name="state">
+                            <option value="">Select State</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <!-- MODIFIED: Added ID -->
+                        <label for="market-select" id="market-label-market">Market</label>
+                        <select id="market-select" name="market" disabled>
+                            <option value="">Select State First</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <!-- MODIFIED: Added ID -->
+                        <label for="crop-select" id="market-label-crop">Crop</label>
+                        <select id="crop-select" name="crop" required disabled>
+                            <option value="">Select Market First</option>
+                        </select>
+                    </div>
+                </div>
+                <!-- MODIFIED: Added ID -->
+                <button type="submit" id="analyze-button" class="cta-button" id="market-button-analyze">Analyze Market Price</button>
+            </form>
+        </section>
+
+        <!-- Analysis Results Section (Initially Hidden) -->
+        <div id="status-indicator" class="hidden">
+            <div class="spinner"></div>
+            <p id="status-text">Generating detailed analysis...</p>
+        </div>
+        <section id="analysis-results-container" class="hidden">
+             <div class="analysis-card">
+                 <div class="analysis-header">
+                    <div>
+                        <h3 id="res-title"></h3>
+                        <p id="res-analysis-date" class="analysis-date-text"></p>
+                    </div>
+                    <span id="res-completeness" class="confidence-badge"></span>
+                </div>
+                <div class="price-display">
+                    <div class="price-point">
+                        <span class="price-label">Current Avg Price</span>
+                        <span id="res-price" class="price-value"></span>
+                    </div>
+                    <div class="price-meta-details">
+                        <div class="status-item">
+                            <strong>Market Trend:</strong>
+                            <span id="res-trend"></span>
+                        </div>
+                        <div class="status-item">
+                           <strong style="background-color: #178717; border-radius: 20px;border: none; color: white;padding: 7px;">Sell Status:</strong>
+                            <span id="res-comparison"></span>
+                        </div>
+                    </div>
+                </div>
+                <p class="analysis-subtitle"><strong>Price Outlook:</strong> <span id="res-outlook"></span></p>
+                <div class="details-grid">
+                    <div class="detail-block">
+                        <h4>Farmer Opinion & Advice</h4>
+                        <p id="res-advice"></p>
+                    </div>
+                    <div class="detail-block">
+                        <h4>Influencing Factors</h4>
+                        <ul id="res-factors"></ul>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Price Table Section (Initially Hidden) -->
+        <section id="price-table-container" class="hidden">
+            <h3 class="table-title">
+                <!-- MODIFIED: Added ID -->
+                <span id="market-table-title">Recent Mandi Prices for</span> 
+                <span id="history-table-title"></span>
+            </h3>
+            <div class="table-wrapper">
+                <table class="price-table">
+                    <thead>
+                        <tr>
+                            <!-- MODIFIED: Added IDs to all table headers -->
+                            <th id="th-commodity">Commodity</th>
+                            <th id="th-min-price">Min Price</th>
+                            <th id="th-max-price">Max Price</th>
+                            <th id="th-avg-price">Avg Price</th>
+                            <th id="th-date">Date</th>
+                        </tr>
+                    </thead>
+                    <tbody id="price-table-body">
+                        <!-- Rows will be injected by JS -->
+                    </tbody>
+                </table>
+            </div>
+        </section>
+    </main>
+
+    <footer class="site-footer">
+        <div class="footer-content-wrapper">
+            <div class="footer-brand"><img src="images/LOGO.png" alt="Project Kisan Logo"><h3>Project Kisan</h3></div>
+            <div class="footer-section" id="footer-team">
+                <!-- MODIFIED: Added ID -->
+                <h4 id="footer-team-title">Our Team: Algo Agni</h4>
+                <div class="team-members-grid">
+                    <div class="team-member-card"><h5>Lakshay Pal</h5><p><a href="tel:+919315674123">9315674123</a></p><p><a href="mailto:llakshaydev@gmail.com">llakshaydev@gmail.com</a></p></div>
+                    <div class="team-member-card"><h5>Kishlay</h5><p><a href="tel:+918368139841">8368139841</a></p><p><a href="mailto:kishlay.ranj@gmail.com">kishlay.ranj@gmail.com</a></p></div>
+                    <div class="team-member-card"><h5>Jatin Gupta</h5><p><a href="tel:+919034602219">9034602219</a></p><p><a href="mailto:jatin.gupta4208@gmail.com">jatin.gupta4208@gmail.com</a></p></div>
+                    <div class="team-member-card"><h5>Krrish Barsiwal</h5><p><a href="tel:+918094951456">8094951456</a></p><p><a href="mailto:krrishbarsiwal777@gmail.com">krrishbarsiwal777@gmail.com</a></p></div>
+                </div>
+            </div>
+        </div>
+        <div class="footer-bottom"><p>©️ 2025 Project Kisan. All Rights Reserved. A new dawn for Indian agriculture.</p></div>
+    </footer>
+    
+    <script src="market.js"></script>
+    <!-- MODIFIED: Added the language manager script -->
+    <script src="language-manager.js"></script>
+</body>
+</html>
