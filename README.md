@@ -1,4 +1,4 @@
-# 🌾 Project Kisan - AI-Powered Farming Assistant
+# 🌾 Project Kisan -- AI-Powered Farming Assistant
 
 **Your Complete AI Farming Partner - From Diagnosis to Market Intelligence**
 
